@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="app" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,6 +7,11 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Hello world</h1>
+    <div ng-blur="" ng-controller="firstController">
+      <h1>My name is {{job}}</h1>
+      <input type="text" ng-model="job" ng-keyup="test();" />
+    </div>
+    <script src="/angular.min.js"></script>
+    <script src="/app.js"></script>
   </body>
 </html>
