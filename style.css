@@ -1,4 +1,4 @@
-.message {
+.messagee {
   font-size: 1.3em;
   font-weight: bold;
 }
@@ -11,8 +11,8 @@
   color: red;
 }
 .textboxGreen {
-  border: 3px solid #0f0;
+  color: #0f0;
 }
 .textboxRed {
-  border: 3px solid #f00;
+  color: #f00;
 }

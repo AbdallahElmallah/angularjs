@@ -19,7 +19,6 @@
           placeholder="list comma separated dishes you usually have for lunch"
           class="form-control"
           ng-model="items"
-          ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
         />
       </div>
       <div class="form-group">
@@ -27,10 +26,20 @@
           Check If Too Much
         </button>
       </div>
-      <div class="form-group message">
+      <div class="form-group messagee">
         <!-- Your message can go here. -->
+
         <div
-          ng-class="{error:message=='Please enter data first',done:message=='Enjoy!'||'Too much!'}"
+          ng-show="checked && flag"
+          ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
+          class="alert alert-success"
+        >
+          {{message}}
+        </div>
+        <div
+          ng-show="!checked && flag"
+          ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
+          class="alert alert-danger"
         >
           {{message}}
         </div>
