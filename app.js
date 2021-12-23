@@ -1,6 +1,7 @@
 var app = angular.module("LunchCheck", []);
 
 app.controller("LunchCheckController", function ($scope) {
+    const MAX_ITEMS = 3;
     $scope.items = "";
     $scope.flag = false;
     $scope.msg = function () {
@@ -18,7 +19,7 @@ app.controller("LunchCheckController", function ($scope) {
             $scope.items
                 .split(",")
                 .map((item) => item.replace(/\s/g, "").trim())
-                .filter((item) => item !== "").length <= 3
+                .filter((item) => item !== "").length <= MAX_ITEMS
         ) {
             $scope.message = "Enjoy!";
             $scope.checked = true;
