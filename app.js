@@ -4,22 +4,21 @@ app.controller("LunchCheckController", function ($scope) {
     const MAX_ITEMS = 3;
     $scope.items = "";
     $scope.flag = false;
+
     $scope.msg = function () {
+        let filteredItems = $scope.items
+            .split(",")
+            .map((item) => item.replace(/\s/g, "").trim())
+            .filter((item) => item !== "");
         if (
-            $scope.items
-                .split(",")
-                .map((item) => item.replace(/\s/g, "").trim())
-                .filter((item) => item !== "").length === 0
+            filteredItems.length === 0
         ) {
             $scope.message = "Please enter data first";
             $scope.checked = false;
             $scope.flag = true;
         }
         else if (
-            $scope.items
-                .split(",")
-                .map((item) => item.replace(/\s/g, "").trim())
-                .filter((item) => item !== "").length <= MAX_ITEMS
+            filteredItems.length <= MAX_ITEMS
         ) {
             $scope.message = "Enjoy!";
             $scope.checked = true;
