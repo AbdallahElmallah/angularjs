@@ -1,0 +1,18 @@
+.message {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.done {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+.textboxGreen {
+  border: 3px solid #0f0;
+}
+.textboxRed {
+  border: 3px solid #f00;
+}
