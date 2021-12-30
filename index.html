@@ -8,8 +8,9 @@
     <style></style>
     <script src="/scripts/angular.min.js"></script>
     <script src="/scripts/app.js"></script>
-    <script src="/scripts/filters.js"></script>
+    <script src="/scripts/services.js"></script>
     <script src="/scripts/controllers.js"></script>
+    <script src="/scripts/filters.js"></script>
   </head>
 
   <body ng-controller="LunchCheckController">
@@ -47,6 +48,30 @@
         >
           {{message}}
         </div>
+      </div>
+
+      <div ng-controller="ShoppingListAddController as itemAdder">
+        <input
+          type="text"
+          ng-model="itemAdder.itemName"
+          placeholder="item name"
+        />
+        <input
+          type="text"
+          ng-model="itemAdder.itemQuantity"
+          placeholder="item quantity"
+        />
+        <button ng-click="itemAdder.addItem();">
+          Add item to shopping list
+        </button>
+      </div>
+      <div ng-controller="ShoppingListShowController as showList">
+        <ol>
+          <li ng-repeat="item in showList.items">
+            {{item.quantity}} of {{item.name | enter }}
+            <button ng-click="showList.removeItem();">Remove Item</button>
+          </li>
+        </ol>
       </div>
     </div>
   </body>

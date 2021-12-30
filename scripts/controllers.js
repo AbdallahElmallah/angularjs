@@ -1,7 +1,6 @@
-
-
 app.controller("LunchCheckController", LunchCheckController);
-
+app.controller("ShoppingListAddController", ShoppingListAddController);
+app.controller("ShoppingListShowController", ShoppingListShowController)
 LunchCheckController.$inject = ["$scope", "enterFilter"];
 
 function LunchCheckController($scope, enterFilter) {
@@ -28,4 +27,23 @@ function LunchCheckController($scope, enterFilter) {
             $scope.flag = true;
         }
     };
+}
+ShoppingListAddController.$inject = ["ShoppingListService"];
+function ShoppingListAddController(ShoppingListService) {
+    var itemAdder = this;
+    itemAdder.itemName = "";
+    itemAdder.itemQuantity = "";
+
+    itemAdder.addItem = function () {
+        ShoppingListService.addItem(itemAdder.itemName, itemAdder.itemQuantity);
+    };
+}
+
+ShoppingListShowController.$inject = ["ShoppingListService"];
+function ShoppingListShowController(ShoppingListService) {
+    var showList = this;
+    showList.items = ShoppingListService.getItems();
+    showList.removeItem = function (itemIndex) {
+        ShoppingListService.removeItem(itemIndex);
+    }
 }
