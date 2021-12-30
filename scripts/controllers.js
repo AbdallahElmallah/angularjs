@@ -91,6 +91,8 @@ function ShoppingListController2(ShoppingListFactory) {
 
     list2.removeItem = function (itemIndex) {
         shoppingList.removeItem(itemIndex);
+        if (list2.items.length < 3)
+            list2.errorMessage = false;
     }
 }
 
