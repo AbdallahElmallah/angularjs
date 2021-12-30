@@ -1,8 +1,10 @@
 app.controller("LunchCheckController", LunchCheckController);
 app.controller("ShoppingListAddController", ShoppingListAddController);
 app.controller("ShoppingListShowController", ShoppingListShowController)
-LunchCheckController.$inject = ["$scope", "enterFilter"];
+app.controller("ShoppingListController1", ShoppingListController1);
+app.controller("ShoppingListController2", ShoppingListController2);
 
+LunchCheckController.$inject = ["$scope", "enterFilter"];
 function LunchCheckController($scope, enterFilter) {
     const MAX_ITEMS = 3;
     $scope.items = "";
@@ -47,3 +49,49 @@ function ShoppingListShowController(ShoppingListService) {
         ShoppingListService.removeItem(itemIndex);
     }
 }
+
+ShoppingListController1.$inject = ["ShoppingListFactory"];
+function ShoppingListController1(ShoppingListFactory) {
+
+    var list1 = this;
+
+    var shoppingList = ShoppingListFactory();
+
+    list1.items = shoppingList.getItems();
+    list1.itemName = "";
+    list1.Quantity = "";
+    list1.addItem = function () {
+        shoppingList.addItem(list1.itemName, list1.Quantity);
+    }
+
+    list1.removeItem = function (itemIndex) {
+        shoppingList.removeItem(itemIndex);
+    }
+
+
+}
+
+ShoppingListController2.$inject = ["ShoppingListFactory"];
+function ShoppingListController2(ShoppingListFactory) {
+    var list2 = this;
+
+    var shoppingList = ShoppingListFactory(3);
+
+    list2.items = shoppingList.getItems();
+    list2.itemName = "";
+    list2.Quantity = "";
+    list2.addItem = function () {
+        try {
+
+            shoppingList.addItem(list2.itemName, list2.Quantity);
+        } catch (error) {
+            list2.errorMessage = error.message;
+        }
+    }
+
+    list2.removeItem = function (itemIndex) {
+        shoppingList.removeItem(itemIndex);
+    }
+}
+
+

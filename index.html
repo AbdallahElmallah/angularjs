@@ -9,69 +9,46 @@
     <script src="/scripts/angular.min.js"></script>
     <script src="/scripts/app.js"></script>
     <script src="/scripts/services.js"></script>
+    <script src="/scripts/factories.js"></script>
     <script src="/scripts/controllers.js"></script>
     <script src="/scripts/filters.js"></script>
   </head>
 
   <body ng-controller="LunchCheckController">
     <div class="container">
-      <h1>Lunch Checker</h1>
-
-      <div class="form-group">
-        <input
-          id="lunch-menu"
-          type="text"
-          placeholder="list comma separated dishes you usually have for lunch"
-          class="form-control"
-          ng-model="items"
-        />
-      </div>
-      <div class="form-group">
-        <button ng-click="msg()" class="btn btn-primary">
-          Check If Too Much
-        </button>
-      </div>
-      <div class="form-group messagee">
-        <!-- Your message can go here. -->
-
-        <div
-          ng-show="checked && flag"
-          ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
-          class="alert alert-success"
-        >
-          {{message}}
-        </div>
-        <div
-          ng-show="!checked && flag"
-          ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
-          class="alert alert-danger"
-        >
-          {{message}}
-        </div>
-      </div>
-
-      <div ng-controller="ShoppingListAddController as itemAdder">
+      <div ng-controller="ShoppingListController1 as list1">
+        <h3>Shopping List #1</h3>
+        <input type="text" ng-model="list1.itemName" placeholder="item name" />
         <input
           type="text"
-          ng-model="itemAdder.itemName"
-          placeholder="item name"
-        />
-        <input
-          type="text"
-          ng-model="itemAdder.itemQuantity"
+          ng-model="list1.Quantity"
           placeholder="item quantity"
         />
-        <button ng-click="itemAdder.addItem();">
-          Add item to shopping list
-        </button>
-      </div>
-      <div ng-controller="ShoppingListShowController as showList">
+        <button ng-click="list1.addItem();">Add item to shopping list</button>
         <ol>
-          <li ng-repeat="item in showList.items">
+          <li ng-repeat="item in list1.items">
             {{item.quantity}} of {{item.name | enter }}
-            <button ng-click="showList.removeItem($index);">Remove Item</button>
+            <button ng-click="list1.removeItem($index);">Remove Item</button>
           </li>
         </ol>
+        <div class="error">Error: {{list1.errorMessage}}</div>
+      </div>
+      <div ng-controller="ShoppingListController2 as list2">
+        <h3>Shopping List #2(limited to 3 items)</h3>
+        <input type="text" ng-model="list2.itemName" placeholder="item name" />
+        <input
+          type="text"
+          ng-model="list2.Quantity"
+          placeholder="item quantity"
+        />
+        <button ng-click="list2.addItem();">Add item to shopping list</button>
+        <ol>
+          <li ng-repeat="item in list2.items">
+            {{item.quantity}} of {{item.name | enter }}
+            <button ng-click="list2.removeItem($index);">Remove Item</button>
+          </li>
+        </ol>
+        <div class="error">Error: {{list2.errorMessage}}</div>
       </div>
     </div>
   </body>
