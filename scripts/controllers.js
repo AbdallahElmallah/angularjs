@@ -4,6 +4,15 @@ app.controller("ShoppingListShowController", ShoppingListShowController)
 app.controller("ShoppingListController1", ShoppingListController1);
 app.controller("ShoppingListController2", ShoppingListController2);
 
+app.config(Config);
+
+Config.$inject = ['ShoppingListServiceProvider'];
+function Config(ShoppingListServiceProvider) {
+    ShoppingListServiceProvider.defaults.maxItems = 2;
+
+}
+
+
 LunchCheckController.$inject = ["$scope", "enterFilter"];
 function LunchCheckController($scope, enterFilter) {
     const MAX_ITEMS = 3;
@@ -71,11 +80,11 @@ function ShoppingListController1(ShoppingListFactory) {
 
 }
 
-ShoppingListController2.$inject = ["ShoppingListFactory"];
-function ShoppingListController2(ShoppingListFactory) {
+ShoppingListController2.$inject = ["ShoppingListService"];
+function ShoppingListController2(ShoppingListService) {
     var list2 = this;
 
-    var shoppingList = ShoppingListFactory(3);
+    var shoppingList = ShoppingListService;
 
     list2.items = shoppingList.getItems();
     list2.itemName = "";
