@@ -69,7 +69,7 @@
         <ol>
           <li ng-repeat="item in showList.items">
             {{item.quantity}} of {{item.name | enter }}
-            <button ng-click="showList.removeItem();">Remove Item</button>
+            <button ng-click="showList.removeItem($index);">Remove Item</button>
           </li>
         </ol>
       </div>
