@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="ShoppingListCheckOff" lang="en">
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/services.js"></script>
+    <script src="/scripts/controllers.js"></script>
+    <script src="/scripts/filters.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Shopping List Check Off</h1>
+
+      <div class="row">
+        <!-- To Buy List -->
+        <div ng-controller="ToBuyController as buy" class="col-lg-6">
+          <h2>To Buy:</h2>
+          <input type="text" ng-model="buy.itemName" placeholder="item name" />
+          <input
+            type="text"
+            ng-model="buy.Quantity"
+            placeholder="item quantity"
+          />
+          <button ng-click="buy.addItem();">Add item to shopping list</button>
+          <ul>
+            <li ng-repeat="item in buy.toBuyItems">
+              buy {{item.quantity}} {{item.name |uppercase }}
+              <button ng-click="buy.buyItem($index);" class="btn btn-default">
+                <span class="glyphicon glyphicon-ok"></span> Bought
+              </button>
+            </li>
+          </ul>
+          <div ng-if="buy.toBuyItems.length===0" class="emptyMessage">
+            Everything is bought!
+          </div>
+        </div>
+
+        <!-- Already Bought List -->
+        <div ng-controller="AlreadyBoughtController as bought" class="col-lg-6">
+          <h2>Already Bought:</h2>
+          <ul>
+            <li ng-repeat="item in bought.boughtItems">
+              Bought {{item.quantity}} {{item.name | enter }}
+            </li>
+            <button ng-click="bought.removeItems();" class="btn btn-default">
+              <span class="glyphicon glyphicon-ok"></span> Remove
+            </button>
+          </ul>
+          <div ng-if="bought.boughtItems.length===0" class="emptyMessage">
+            Nothing bought yet.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

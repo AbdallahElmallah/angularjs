@@ -6,12 +6,16 @@ app.controller("ShoppingListController2", ShoppingListController2);
 
 app.config(Config);
 
+
+app2.controller("ToBuyController", ToBuyController);
+app2.controller("AlreadyBoughtController", AlreadyBoughtController);
+
+
 Config.$inject = ['ShoppingListServiceProvider'];
 function Config(ShoppingListServiceProvider) {
     ShoppingListServiceProvider.defaults.maxItems = 2;
 
 }
-
 
 LunchCheckController.$inject = ["$scope", "enterFilter"];
 function LunchCheckController($scope, enterFilter) {
@@ -105,4 +109,31 @@ function ShoppingListController2(ShoppingListService) {
     }
 }
 
+ToBuyController.$inject = ["ShoppingListCheckOffService"];
+function ToBuyController(ShoppingListCheckOffService) {
 
+    var service = this;
+    service.toBuyItems = ShoppingListCheckOffService.getToBuyItems();
+    service.itemName = "";
+    service.Quantity = "";
+    service.addItem = function () {
+        ShoppingListCheckOffService.addItem(service.itemName, service.Quantity);
+    };
+
+    service.buyItem = function (itemIndex) {
+        ShoppingListCheckOffService.buyItem(itemIndex);
+    }
+
+
+}
+AlreadyBoughtController.$inject = ["ShoppingListCheckOffService"];
+function AlreadyBoughtController(ShoppingListCheckOffService) {
+    var service = this;
+    service.boughtItems = ShoppingListCheckOffService.getBoughtItems();
+    service.removeItem = function () {
+        ShoppingListCheckOffService.removeItem();
+    }
+    service.removeItems = function () {
+        ShoppingListCheckOffService.removeItems();
+    }
+}
