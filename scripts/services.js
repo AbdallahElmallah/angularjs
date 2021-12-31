@@ -56,7 +56,6 @@ function ShoppingListCheckOffService() {
     service.buyItem = function (itemIndex) {
         boughtItems.push(toBuyItems[itemIndex]);
         toBuyItems.splice(itemIndex, 1);
-        console.log(boughtItems[itemIndex]);
     }
 
 }
