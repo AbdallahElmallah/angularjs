@@ -3,13 +3,12 @@ app.controller("LunchCheckController", LunchCheckController);
 app2.controller("ShoppingListController", ShoppingListController);
 app2.controller("ShoppingLimitedListController", ShoppingLimitedListController);
 
-
 app3.controller("ToBuyController", ToBuyController);
 app3.controller("AlreadyBoughtController", AlreadyBoughtController);
 
-
 app4.controller("ShoppingListPromiseController", ShoppingListPromiseController);
 
+app5.controller("MenuCategoriesController", MenuCategoriesController);
 
 LunchCheckController.$inject = ["$scope"];
 function LunchCheckController($scope) {
@@ -39,7 +38,6 @@ function LunchCheckController($scope) {
 
 ShoppingListController.$inject = ["ShoppingListFactory"];
 function ShoppingListController(ShoppingListFactory) {
-
     var list1 = this;
 
     var shoppingList = ShoppingListFactory();
@@ -53,12 +51,11 @@ function ShoppingListController(ShoppingListFactory) {
         } catch (error) {
             list1.errorMessage = error.message;
         }
-    }
+    };
 
     list1.removeItem = function (itemIndex) {
         shoppingList.removeItem(itemIndex);
-    }
-
+    };
 }
 
 ShoppingLimitedListController.$inject = ["ShoppingListFactory"];
@@ -76,18 +73,16 @@ function ShoppingLimitedListController(ShoppingListFactory) {
         } catch (error) {
             list2.errorMessage = error.message;
         }
-    }
+    };
 
     list2.removeItem = function (itemIndex) {
         shoppingList.removeItem(itemIndex);
-        if (list2.items.length < 3)
-            list2.errorMessage = false;
-    }
+        if (list2.items.length < 3) list2.errorMessage = false;
+    };
 }
 
 ToBuyController.$inject = ["ShoppingListCheckOffService"];
 function ToBuyController(ShoppingListCheckOffService) {
-
     var service = this;
     service.toBuyItems = ShoppingListCheckOffService.getToBuyItems();
     service.itemName = "";
@@ -98,9 +93,7 @@ function ToBuyController(ShoppingListCheckOffService) {
 
     service.buyItem = function (itemIndex) {
         ShoppingListCheckOffService.buyItem(itemIndex);
-    }
-
-
+    };
 }
 AlreadyBoughtController.$inject = ["ShoppingListCheckOffService"];
 function AlreadyBoughtController(ShoppingListCheckOffService) {
@@ -108,15 +101,13 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
     service.boughtItems = ShoppingListCheckOffService.getBoughtItems();
     service.removeItem = function () {
         ShoppingListCheckOffService.removeItem();
-    }
+    };
     service.removeItems = function () {
         ShoppingListCheckOffService.removeItems();
-    }
+    };
 }
 
-
-
-ShoppingListPromiseController.$inject = ['ShoppingListService'];
+ShoppingListPromiseController.$inject = ["ShoppingListService"];
 function ShoppingListPromiseController(ShoppingListService) {
     var list = this;
 
@@ -131,5 +122,32 @@ function ShoppingListPromiseController(ShoppingListService) {
 
     list.removeItem = function (itemIndex) {
         ShoppingListService.removeItem(itemIndex);
+    };
+}
+
+MenuCategoriesController.$inject = ["MenuCategoriesService"];
+function MenuCategoriesController(MenuCategoriesService) {
+    var menu = this;
+
+    var promise = MenuCategoriesService.getMenuCategories();
+
+    promise
+        .then(function (response) {
+            menu.categories = response.data;
+        })
+        .catch(function (error) {
+            console.log("Something went terribly wrong.");
+        });
+
+    menu.logMenuItems = function (shortName) {
+        var promise = MenuCategoriesService.getMenuForCategory(shortName);
+
+        promise
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 }

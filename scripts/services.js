@@ -1,9 +1,13 @@
-
 app2.service("ShoppingLimitedListService", ShoppingLimitedListService);
+
 app3.service("ShoppingListCheckOffService", ShoppingListCheckOffService)
 
 app4.service('ShoppingListService', ShoppingListService);
 app4.service('WeightLossFilterService', WeightLossFilterService);
+
+app5.service('MenuCategoriesService', MenuCategoriesService)
+app5.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
+
 
 function ShoppingLimitedListService() {
 
@@ -184,4 +188,33 @@ function ShoppingListService($q, WeightLossFilterService) {
     service.getItems = function () {
         return items;
     };
+}
+
+
+MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
+function MenuCategoriesService($http, ApiBasePath) {
+    var service = this;
+
+    service.getMenuCategories = function () {
+        var response = $http({
+            method: "GET",
+            url: (ApiBasePath + "/categories.json")
+        });
+
+        return response;
+    };
+
+
+    service.getMenuForCategory = function (shortName) {
+        var response = $http({
+            method: "GET",
+            url: (ApiBasePath + "/menu_items.json"),
+            params: {
+                category: shortName
+            }
+        });
+
+        return response;
+    };
+
 }
