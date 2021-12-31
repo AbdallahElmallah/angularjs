@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="LunchCheck" lang="en">
+
+<head>
+  <title>Lunch Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+  <link rel="stylesheet" href="/styles/style.css" />
+  <style></style>
+</head>
+
+<body ng-controller="LunchCheckController">
+  <div class="container">
+    <h1>Lunch Checker</h1>
+
+    <div class="form-group">
+      <input id="lunch-menu" type="text" placeholder="list comma separated dishes you usually have for lunch"
+        class="form-control" ng-model="items" />
+    </div>
+    <div class="form-group">
+      <button ng-click="msg()" class="btn btn-primary">
+        Check If Too Much
+      </button>
+    </div>
+    <div class="form-group messagee">
+      <!-- Your message can go here. -->
+      <div ng-show="checked && flag"
+        ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
+        class="alert alert-success">
+        {{message}}
+      </div>
+      <div ng-show="!checked && flag"
+        ng-class="{textboxRed:message=='Please enter data first',textboxGreen:message=='Enjoy!'||'Too much!'}"
+        class="alert alert-danger">
+        {{message}}
+      </div>
+    </div>
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/services.js"></script>
+    <script src="/scripts/factories.js"></script>
+    <script src="/scripts/providers.js"></script>
+    <script src="/scripts/controllers.js"></script>
+    <script src="/scripts/filters.js"></script>
+</body>
+
+</html>

@@ -1,28 +1,21 @@
 app.controller("LunchCheckController", LunchCheckController);
-app.controller("ShoppingListAddController", ShoppingListAddController);
-app.controller("ShoppingListShowController", ShoppingListShowController)
-app.controller("ShoppingListController1", ShoppingListController1);
-app.controller("ShoppingListController2", ShoppingListController2);
 
-app.config(Config);
+app2.controller("ShoppingListController", ShoppingListController);
+app2.controller("ShoppingLimitedListController", ShoppingLimitedListController);
 
 
-app2.controller("ToBuyController", ToBuyController);
-app2.controller("AlreadyBoughtController", AlreadyBoughtController);
+app3.controller("ToBuyController", ToBuyController);
+app3.controller("AlreadyBoughtController", AlreadyBoughtController);
 
 
-Config.$inject = ['ShoppingListServiceProvider'];
-function Config(ShoppingListServiceProvider) {
-    ShoppingListServiceProvider.defaults.maxItems = 2;
+app4.controller("ShoppingListPromiseController", ShoppingListPromiseController);
 
-}
 
-LunchCheckController.$inject = ["$scope", "enterFilter"];
-function LunchCheckController($scope, enterFilter) {
+LunchCheckController.$inject = ["$scope"];
+function LunchCheckController($scope) {
     const MAX_ITEMS = 3;
     $scope.items = "";
     $scope.flag = false;
-    console.log(enterFilter("enter"));
     $scope.msg = function () {
         let filteredItems = $scope.items
             .split(",")
@@ -43,28 +36,9 @@ function LunchCheckController($scope, enterFilter) {
         }
     };
 }
-ShoppingListAddController.$inject = ["ShoppingListService"];
-function ShoppingListAddController(ShoppingListService) {
-    var itemAdder = this;
-    itemAdder.itemName = "";
-    itemAdder.itemQuantity = "";
 
-    itemAdder.addItem = function () {
-        ShoppingListService.addItem(itemAdder.itemName, itemAdder.itemQuantity);
-    };
-}
-
-ShoppingListShowController.$inject = ["ShoppingListService"];
-function ShoppingListShowController(ShoppingListService) {
-    var showList = this;
-    showList.items = ShoppingListService.getItems();
-    showList.removeItem = function (itemIndex) {
-        ShoppingListService.removeItem(itemIndex);
-    }
-}
-
-ShoppingListController1.$inject = ["ShoppingListFactory"];
-function ShoppingListController1(ShoppingListFactory) {
+ShoppingListController.$inject = ["ShoppingListFactory"];
+function ShoppingListController(ShoppingListFactory) {
 
     var list1 = this;
 
@@ -74,28 +48,30 @@ function ShoppingListController1(ShoppingListFactory) {
     list1.itemName = "";
     list1.Quantity = "";
     list1.addItem = function () {
-        shoppingList.addItem(list1.itemName, list1.Quantity);
+        try {
+            shoppingList.addItem(list1.itemName, list1.Quantity);
+        } catch (error) {
+            list1.errorMessage = error.message;
+        }
     }
 
     list1.removeItem = function (itemIndex) {
         shoppingList.removeItem(itemIndex);
     }
 
-
 }
 
-ShoppingListController2.$inject = ["ShoppingListService"];
-function ShoppingListController2(ShoppingListService) {
+ShoppingLimitedListController.$inject = ["ShoppingListFactory"];
+function ShoppingLimitedListController(ShoppingListFactory) {
     var list2 = this;
 
-    var shoppingList = ShoppingListService;
+    var shoppingList = ShoppingListFactory(2);
 
     list2.items = shoppingList.getItems();
     list2.itemName = "";
     list2.Quantity = "";
     list2.addItem = function () {
         try {
-
             shoppingList.addItem(list2.itemName, list2.Quantity);
         } catch (error) {
             list2.errorMessage = error.message;
@@ -136,4 +112,24 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
     service.removeItems = function () {
         ShoppingListCheckOffService.removeItems();
     }
+}
+
+
+
+ShoppingListPromiseController.$inject = ['ShoppingListService'];
+function ShoppingListPromiseController(ShoppingListService) {
+    var list = this;
+
+    list.items = ShoppingListService.getItems();
+
+    list.itemName = "";
+    list.itemQuantity = "";
+
+    list.addItem = function () {
+        ShoppingListService.addItem(list.itemName, list.itemQuantity);
+    };
+
+    list.removeItem = function (itemIndex) {
+        ShoppingListService.removeItem(itemIndex);
+    };
 }

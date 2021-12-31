@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="ShoppingList" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div ng-controller="ShoppingListController as list1">
+        <h3>Shopping List #1</h3>
+        <input type="text" ng-model="list1.itemName" placeholder="item name" />
+        <input
+          type="text"
+          ng-model="list1.Quantity"
+          placeholder="item quantity"
+        />
+        <button ng-click="list1.addItem();">Add item to shopping list</button>
+        <ol>
+          <li ng-repeat="item in list1.items">
+            {{item.quantity}} of {{item.name}}
+            <button ng-click="list1.removeItem($index);">Remove Item</button>
+          </li>
+        </ol>
+        <div ng-show="list1.errorMessage" class="alert alert-danger">
+          Error: {{list2.errorMessage}}
+        </div>
+      </div>
+      <div ng-controller="ShoppingLimitedListController as list2">
+        <h3>Shopping List #2(limited to 3 items)</h3>
+        <input type="text" ng-model="list2.itemName" placeholder="item name" />
+        <input
+          type="text"
+          ng-model="list2.Quantity"
+          placeholder="item quantity"
+        />
+        <button ng-click="list2.addItem();">Add item to shopping list</button>
+        <ol>
+          <li ng-repeat="item in list2.items">
+            {{item.quantity}} of {{item.name}}
+            <button ng-click="list2.removeItem($index);">Remove Item</button>
+          </li>
+        </ol>
+        <div ng-show="list2.errorMessage" class="alert alert-danger">
+          Error: {{list2.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/services.js"></script>
+    <script src="/scripts/factories.js"></script>
+    <script src="/scripts/providers.js"></script>
+    <script src="/scripts/controllers.js"></script>
+    <script src="/scripts/filters.js"></script>
+  </body>
+</html>

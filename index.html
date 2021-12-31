@@ -6,6 +6,42 @@
     <link rel="stylesheet" href="/styles/bootstrap.min.css" />
     <link rel="stylesheet" href="/styles/style.css" />
     <style></style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <a
+          class="btn btn-primary col-md-2"
+          href="/assignment1/lunchChecker.html"
+          role="button"
+          title="Lunch Checker Assignment"
+          >GOTO Assignment #1
+        </a>
+        <a
+          class="btn btn-primary col-md-2"
+          href="examples/shoppingListLimitedItems.html"
+          role="button"
+          title="Shopping List Limited Items Example"
+          >GoTo Shopping List #1
+        </a>
+        <a
+          class="btn btn-primary col-md-2"
+          href="assignment2/shoppingListCheckOut.html"
+          role="button"
+          title="Shopping List CheckOut Items Assignment"
+          >GoTo Shopping List #2
+        </a>
+        <a
+          class="btn btn-primary col-md-2"
+          href="examples/promiseExample.html"
+          role="button"
+          title="Promise Example"
+          >GoTo Promise Example
+        </a>
+      </div>
+    </div>
+
     <script src="/scripts/angular.min.js"></script>
     <script src="/scripts/app.js"></script>
     <script src="/scripts/services.js"></script>
@@ -13,54 +49,5 @@
     <script src="/scripts/providers.js"></script>
     <script src="/scripts/controllers.js"></script>
     <script src="/scripts/filters.js"></script>
-  </head>
-
-  <body>
-    <div class="container">
-      <div ng-controller="ShoppingListController1 as list1">
-        <h3>Shopping List #1</h3>
-        <input type="text" ng-model="list1.itemName" placeholder="item name" />
-        <input
-          type="text"
-          ng-model="list1.Quantity"
-          placeholder="item quantity"
-        />
-        <button ng-click="list1.addItem();">Add item to shopping list</button>
-        <ol>
-          <li ng-repeat="item in list1.items">
-            {{item.quantity}} of {{item.name}}
-            <button ng-click="list1.removeItem($index);">Remove Item</button>
-          </li>
-        </ol>
-        <div ng-show="list1.errorMessage" class="alert alert-danger">
-          Error: {{list2.errorMessage}}
-        </div>
-      </div>
-      <div ng-controller="ShoppingListController2 as list2">
-        <h3>Shopping List #2(limited to 3 items)</h3>
-        <input type="text" ng-model="list2.itemName" placeholder="item name" />
-        <input
-          type="text"
-          ng-model="list2.Quantity"
-          placeholder="item quantity"
-        />
-        <button ng-click="list2.addItem();">Add item to shopping list</button>
-        <ol>
-          <li ng-repeat="item in list2.items">
-            {{item.quantity}} of {{item.name}}
-            <button ng-click="list2.removeItem($index);">Remove Item</button>
-          </li>
-        </ol>
-        <div ng-show="list2.errorMessage" class="alert alert-danger">
-          Error: {{list2.errorMessage}}
-        </div>
-      </div>
-      <a
-        class="btn btn-primary"
-        href="/assignment2/shoppingListCheckOut.html"
-        role="button"
-        >GoTo Assignment #2</a
-      >
-    </div>
   </body>
 </html>

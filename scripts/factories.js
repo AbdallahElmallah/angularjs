@@ -1,6 +1,6 @@
-app.factory("ShoppingListFactory", ShoppingListFactory);
+app2.factory("ShoppingListFactory", ShoppingListFactory);
 
-function ShoppingListService(maxItems) {
+function ShoppingLimitedListService(maxItems) {
     var service = this;
 
     var items = [];
@@ -29,7 +29,7 @@ function ShoppingListService(maxItems) {
 
 function ShoppingListFactory() {
     var factory = function (maxItems) {
-        return new ShoppingListService(maxItems);
+        return new ShoppingLimitedListService(maxItems);
     };
     return factory;
 }
