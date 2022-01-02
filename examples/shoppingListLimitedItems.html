@@ -11,7 +11,6 @@
   <body>
     <div class="container">
       <div ng-controller="ShoppingListController as list1">
-        <h3>Shopping List #1</h3>
         <input type="text" ng-model="list1.itemName" placeholder="item name" />
         <input
           type="text"
@@ -19,36 +18,18 @@
           placeholder="item quantity"
         />
         <button ng-click="list1.addItem();">Add item to shopping list</button>
-        <ol>
-          <li ng-repeat="item in list1.items">
-            {{item.quantity}} of {{item.name}}
-            <button ng-click="list1.removeItem($index);">Remove Item</button>
-          </li>
-        </ol>
-        <div ng-show="list1.errorMessage" class="alert alert-danger">
-          Error: {{list2.errorMessage}}
-        </div>
-      </div>
-      <div ng-controller="ShoppingLimitedListController as list2">
-        <h3>Shopping List #2(limited to 3 items)</h3>
-        <input type="text" ng-model="list2.itemName" placeholder="item name" />
-        <input
-          type="text"
-          ng-model="list2.Quantity"
-          placeholder="item quantity"
-        />
-        <button ng-click="list2.addItem();">Add item to shopping list</button>
-        <ol>
-          <li ng-repeat="item in list2.items">
-            {{item.quantity}} of {{item.name}}
-            <button ng-click="list2.removeItem($index);">Remove Item</button>
-          </li>
-        </ol>
-        <div ng-show="list2.errorMessage" class="alert alert-danger">
-          Error: {{list2.errorMessage}}
-        </div>
+        <shopping-list
+          items="list1.items"
+          title="{{list1.title}}"
+          removed-item="{{list1.removedItem}}"
+          on-remove="list1.removeItem(itemIndex)"
+          on-all-remove="list1.removeItems()"
+        >
+          <span class="error"> Error: {{list1.warning }} </span>
+        </shopping-list>
       </div>
     </div>
+    <script src="/scripts/jquery-3.6.0.min.js"></script>
     <script src="/scripts/angular.min.js"></script>
     <script src="/scripts/app.js"></script>
     <script src="/scripts/services.js"></script>
@@ -56,5 +37,6 @@
     <script src="/scripts/providers.js"></script>
     <script src="/scripts/controllers.js"></script>
     <script src="/scripts/filters.js"></script>
+    <script src="/scripts/directives.js"></script>
   </body>
 </html>

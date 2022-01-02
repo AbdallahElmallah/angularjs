@@ -36,26 +36,68 @@ function LunchCheckController($scope) {
     };
 }
 
+
 ShoppingListController.$inject = ["ShoppingListFactory"];
 function ShoppingListController(ShoppingListFactory) {
     var list1 = this;
-
-    var shoppingList = ShoppingListFactory();
-
+    list1.MAX_ITEMS = 4;
+    var shoppingList = ShoppingListFactory(list1.MAX_ITEMS);
+    list1.checked = false;
     list1.items = shoppingList.getItems();
     list1.itemName = "";
     list1.Quantity = "";
+    var origTitle = "Shopping List #1";
+    list1.title = origTitle + " (" + list1.items.length + " items )";
     list1.addItem = function () {
         try {
-            shoppingList.addItem(list1.itemName, list1.Quantity);
+            if ((list1.itemName && list1.Quantity) === "") {
+                list1.emptyItem = "Enter empty field(s) first";
+                console.log(list1.emptyItem);
+            } else {
+
+                if (list1.itemName == "cookie") {
+                    list1.warning = "cookie detected!";
+                }
+                shoppingList.addItem(list1.itemName, list1.Quantity);
+                list1.title = origTitle + " (" + list1.items.length + " items )";
+            }
         } catch (error) {
             list1.errorMessage = error.message;
+            console.log(list1.errorMessage);
         }
     };
 
     list1.removeItem = function (itemIndex) {
+        list1.removedItem = "Last removed Item was " + "(" + list1.items[itemIndex].name + ")";
         shoppingList.removeItem(itemIndex);
+        list1.title = origTitle + " (" + list1.items.length + " items )";
+        if (list1.items.length < list1.MAX_ITEMS) {
+            return list1.errorMessage = false;
+        }
+
     };
+    list1.removeItems = function () {
+
+        if (list1.items.length !== 0) {
+
+            list1.removedItem = "Last removed Item was " +
+                "(" + list1.items.at(-1).name + ")";
+
+            list1.items.length = 0;
+
+            list1.title = origTitle + " (" + list1.items.length + " items )";
+            list1.deletedItems = "List Items Deleted";
+            console.log(list1.deletedItems);
+        } else {
+
+            list1.deletedItems = "List is already empty";
+            console.log(list1.deletedItems)
+
+        }
+
+
+
+    }
 }
 
 ShoppingLimitedListController.$inject = ["ShoppingListFactory"];

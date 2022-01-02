@@ -21,6 +21,11 @@ function ShoppingLimitedListService(maxItems) {
     service.removeItem = function (indexItem) {
         items.splice(indexItem, 1);
     }
+    service.removeItems = function () {
+        if (items.length !== 0) {
+            items.length = 0;
+        } else throw new Error("List is already empty.");
+    }
 
     service.getItems = function () {
         return items;
