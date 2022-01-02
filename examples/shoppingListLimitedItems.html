@@ -27,6 +27,13 @@
         >
           <span class="error"> Error: {{list1.warning }} </span>
         </shopping-list>
+        <br />
+        <div class="alert alert-warning" ng-if="list1.flag">
+          {{list1.emptyList}}
+        </div>
+        <div class="alert alert-warning" ng-if="list1.emptyItemMsg">
+          {{list1.emptyItem}}
+        </div>
       </div>
     </div>
     <script src="/scripts/jquery-3.6.0.min.js"></script>

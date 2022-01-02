@@ -52,14 +52,16 @@ function ShoppingListController(ShoppingListFactory) {
         try {
             if ((list1.itemName && list1.Quantity) === "") {
                 list1.emptyItem = "Enter empty field(s) first";
+                list1.emptyItemMsg = true;
                 console.log(list1.emptyItem);
             } else {
-
+                list1.emptyItemMsg = false;
                 if (list1.itemName == "cookie") {
                     list1.warning = "cookie detected!";
                 }
                 shoppingList.addItem(list1.itemName, list1.Quantity);
                 list1.title = origTitle + " (" + list1.items.length + " items )";
+                list1.flag = false
             }
         } catch (error) {
             list1.errorMessage = error.message;
@@ -69,6 +71,9 @@ function ShoppingListController(ShoppingListFactory) {
 
     list1.removeItem = function (itemIndex) {
         list1.removedItem = "Last removed Item was " + "(" + list1.items[itemIndex].name + ")";
+        if (list1.items.length == 1) {
+            list1.flag = false
+        }
         shoppingList.removeItem(itemIndex);
         list1.title = origTitle + " (" + list1.items.length + " items )";
         if (list1.items.length < list1.MAX_ITEMS) {
@@ -76,6 +81,7 @@ function ShoppingListController(ShoppingListFactory) {
         }
 
     };
+
     list1.removeItems = function () {
 
         if (list1.items.length !== 0) {
@@ -86,12 +92,15 @@ function ShoppingListController(ShoppingListFactory) {
             list1.items.length = 0;
 
             list1.title = origTitle + " (" + list1.items.length + " items )";
-            list1.deletedItems = "List Items Deleted";
-            console.log(list1.deletedItems);
+            list1.emptyList = "List Items Deleted";
+            console.log(list1.emptyList);
+            list1.flag = false
+
         } else {
 
-            list1.deletedItems = "List is already empty";
-            console.log(list1.deletedItems)
+            list1.emptyList = "List is already empty";
+            list1.flag = true;
+            console.log(list1.emptyList)
 
         }
 
