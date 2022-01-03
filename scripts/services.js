@@ -213,32 +213,10 @@ MenuSearchService.$inject = ["$http", "ApiBasePath"];
 function MenuSearchService($http, ApiBasePath) {
     var service = this;
 
-    service.getMatchedMenuItems = function (searchTerm) {
+    service.getMatchedMenuItems = function () {
         return $http({
             method: "GET",
             url: ApiBasePath + "/menu_items.json",
-        })
-            .then(function (response) {
-                // process result and only keep items that match
-                var foundItems = [];
-                var menuItems = response["data"]["menu_items"];
-                menuItems.forEach((element) => {
-                    if (searchTerm !== "") {
-                        if (element["description"].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
-                            foundItems.push(element["description"]);
-                            console.log("Added");
-                        }
-                    } else {
-                        console.log("EEmpty String ")
-                        return foundItems;
-                    }
-                });
-
-                // return processed items
-                return foundItems;
-            })
-            .catch(function (error) {
-                throw new Error(error.message);
-            });
-    };
+        });
+    }
 }

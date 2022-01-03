@@ -204,23 +204,50 @@ function SearchForDescriptionController(MenuSearchService) {
     info.found = [];
     // info.flag = false;
     info.getItems = function (searchTerm) {
-        var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
+        var promise = MenuSearchService.getMatchedMenuItems();
 
-        promise
-            .then(function (response) {
-                if (response.length === 0) {
-                    info.message = "Not Found!";
-                    info.found = [];
-                    info.flag = false;
+        promise.then(function (response) {
+            var menuItems = response["data"]["menu_items"];
+            menuItems.forEach((element) => {
+                if (searchTerm !== "") {
+                    if (element["description"].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
+                        info.found.push(element["description"]);
+                        console.log("Added");
+                        info.flag = true;
+                    }
                 } else {
-                    info.flag = true;
-                    info.found = response;
-                    console.log(info.found);
+                    console.log("Empty String ")
+                    info.message = "Not Found!";
+                    // info.found = [];
+                    info.flag = false;
+                    return info.found = [];
                 }
-            })
-            .catch(function (error) {
-                console.log(error.message);
             });
+
+            // return processed items
+            return info.found;
+        }).catch(function (error) {
+            info.message = error.message;
+            console.log(error.message);
+        });
+
+
+
+        // promise
+        //     .then(function (response) {
+        //         if (response.length === 0) {
+        //             info.message = "Not Found!";
+        //             info.found = [];
+        //             info.flag = false;
+        //         } else {
+        //             info.flag = true;
+        //             info.found = response;
+        //             console.log(info.found);
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error.message);
+        //     });
     };
 
     info.deleteItem = function (itemIndex) {
