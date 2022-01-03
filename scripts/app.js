@@ -12,3 +12,6 @@ let app4 = angular.module("ShoppingListPromiseApp");
 
 angular.module('MenuCategoriesApp', []);
 let app5 = angular.module('MenuCategoriesApp');
+
+angular.module("SearchForDescription", []);
+let app6 = angular.module("SearchForDescription");

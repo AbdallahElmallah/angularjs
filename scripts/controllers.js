@@ -10,6 +10,8 @@ app4.controller("ShoppingListPromiseController", ShoppingListPromiseController);
 
 app5.controller("MenuCategoriesController", MenuCategoriesController);
 
+app6.controller("SearchForDescriptionController", SearchForDescriptionController);
+
 LunchCheckController.$inject = ["$scope"];
 function LunchCheckController($scope) {
     const MAX_ITEMS = 3;
@@ -36,7 +38,6 @@ function LunchCheckController($scope) {
     };
 }
 
-
 ShoppingListController.$inject = ["ShoppingListFactory"];
 function ShoppingListController(ShoppingListFactory) {
     var list1 = this;
@@ -61,7 +62,7 @@ function ShoppingListController(ShoppingListFactory) {
                 }
                 shoppingList.addItem(list1.itemName, list1.Quantity);
                 list1.title = origTitle + " (" + list1.items.length + " items )";
-                list1.flag = false
+                list1.flag = false;
             }
         } catch (error) {
             list1.errorMessage = error.message;
@@ -70,43 +71,35 @@ function ShoppingListController(ShoppingListFactory) {
     };
 
     list1.removeItem = function (itemIndex) {
-        list1.removedItem = "Last removed Item was " + "(" + list1.items[itemIndex].name + ")";
+        list1.removedItem =
+            "Last removed Item was " + "(" + list1.items[itemIndex].name + ")";
         if (list1.items.length == 1) {
-            list1.flag = false
+            list1.flag = false;
         }
         shoppingList.removeItem(itemIndex);
         list1.title = origTitle + " (" + list1.items.length + " items )";
         if (list1.items.length < list1.MAX_ITEMS) {
-            return list1.errorMessage = false;
+            return (list1.errorMessage = false);
         }
-
     };
 
     list1.removeItems = function () {
-
         if (list1.items.length !== 0) {
-
-            list1.removedItem = "Last removed Item was " +
-                "(" + list1.items.at(-1).name + ")";
+            list1.removedItem =
+                "Last removed Item was " + "(" + list1.items.at(-1).name + ")";
 
             list1.items.length = 0;
 
             list1.title = origTitle + " (" + list1.items.length + " items )";
             list1.emptyList = "List Items Deleted";
             console.log(list1.emptyList);
-            list1.flag = false
-
+            list1.flag = false;
         } else {
-
             list1.emptyList = "List is already empty";
             list1.flag = true;
-            console.log(list1.emptyList)
-
+            console.log(list1.emptyList);
         }
-
-
-
-    }
+    };
 }
 
 ShoppingLimitedListController.$inject = ["ShoppingListFactory"];
@@ -201,4 +194,37 @@ function MenuCategoriesController(MenuCategoriesService) {
                 console.log(error);
             });
     };
+}
+
+SearchForDescriptionController.$inject = ["MenuSearchService"];
+function SearchForDescriptionController(MenuSearchService) {
+    var info = this;
+    info.searchTerm = "";
+    info.message = "";
+    info.found = [];
+    // info.flag = false;
+    info.getItems = function (searchTerm) {
+        var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
+
+        promise
+            .then(function (response) {
+                if (response.length === 0) {
+                    info.message = "Not Found!";
+                    info.found = [];
+                    info.flag = false;
+                } else {
+                    info.flag = true;
+                    info.found = response;
+                    console.log(info.found);
+                }
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
+    };
+
+    info.deleteItem = function (itemIndex) {
+        console.log("aaaa")
+        info.found.splice(itemIndex, 1);
+    }
 }

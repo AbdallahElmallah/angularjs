@@ -1,16 +1,17 @@
 app2.service("ShoppingLimitedListService", ShoppingLimitedListService);
 
-app3.service("ShoppingListCheckOffService", ShoppingListCheckOffService)
+app3.service("ShoppingListCheckOffService", ShoppingListCheckOffService);
 
-app4.service('ShoppingListService', ShoppingListService);
-app4.service('WeightLossFilterService', WeightLossFilterService);
+app4.service("ShoppingListService", ShoppingListService);
+app4.service("WeightLossFilterService", WeightLossFilterService);
 
-app5.service('MenuCategoriesService', MenuCategoriesService)
-app5.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
+app5.service("MenuCategoriesService", MenuCategoriesService);
+app5.constant("ApiBasePath", "https://davids-restaurant.herokuapp.com");
 
+app6.service("MenuSearchService", MenuSearchService);
+app6.constant("ApiBasePath", "https://davids-restaurant.herokuapp.com");
 
 function ShoppingLimitedListService() {
-
     var service = this;
 
     var items = [];
@@ -30,11 +31,10 @@ function ShoppingLimitedListService() {
 
     service.removeItem = function (itemIndex) {
         items.splice(itemIndex, 1);
-    }
+    };
 }
 
 function ShoppingListCheckOffService() {
-
     var service = this;
 
     var toBuyItems = [];
@@ -54,21 +54,20 @@ function ShoppingListCheckOffService() {
     };
     service.getBoughtItems = function () {
         return boughtItems;
-    }
+    };
     service.removeItem = function (itemIndex) {
         boughtItems.splice(itemIndex, 1);
-    }
+    };
     service.removeItems = function () {
         boughtItems.length = 0;
-    }
+    };
     service.buyItem = function (itemIndex) {
         boughtItems.push(toBuyItems[itemIndex]);
         toBuyItems.splice(itemIndex, 1);
-    }
-
+    };
 }
 
-WeightLossFilterService.$inject = ['$q', '$timeout'];
+WeightLossFilterService.$inject = ["$q", "$timeout"];
 function WeightLossFilterService($q, $timeout) {
     var service = this;
 
@@ -76,14 +75,13 @@ function WeightLossFilterService($q, $timeout) {
         var deferred = $q.defer();
 
         var result = {
-            message: ""
+            message: "",
         };
 
         $timeout(function () {
-            if (name.toLowerCase().indexOf('milk') === -1) {
-                deferred.resolve(result)
-            }
-            else {
+            if (name.toLowerCase().indexOf("milk") === -1) {
+                deferred.resolve(result);
+            } else {
                 result.message = "Don't buy milk!";
                 deferred.reject(result);
             }
@@ -92,20 +90,18 @@ function WeightLossFilterService($q, $timeout) {
         return deferred.promise;
     };
 
-
     service.checkQuantity = function (quantity) {
         var deferred = $q.defer();
         var MAX_BOXES = 6;
         var result = {
-            message: ""
+            message: "",
         };
 
         $timeout(function () {
             // Check for too many boxes
             if (quantity < MAX_BOXES) {
                 deferred.resolve(result);
-            }
-            else {
+            } else {
                 result.message = "That's too much";
                 deferred.reject(result);
             }
@@ -115,8 +111,7 @@ function WeightLossFilterService($q, $timeout) {
     };
 }
 
-
-ShoppingListService.$inject = ["$q", 'WeightLossFilterService'];
+ShoppingListService.$inject = ["$q", "WeightLossFilterService"];
 function ShoppingListService($q, WeightLossFilterService) {
     var service = this;
 
@@ -143,7 +138,6 @@ function ShoppingListService($q, WeightLossFilterService) {
     //     });
     // };
 
-
     // service.addItem = function (name, quantity) {
     //     var promise = WeightLossFilterService.checkName(name);
 
@@ -163,16 +157,15 @@ function ShoppingListService($q, WeightLossFilterService) {
     //         });
     // };
 
-
     service.addItem = function (name, quantity) {
         var namePromise = WeightLossFilterService.checkName(name);
         var quantityPromise = WeightLossFilterService.checkQuantity(quantity);
 
-        $q.all([namePromise, quantityPromise]).
-            then(function (response) {
+        $q.all([namePromise, quantityPromise])
+            .then(function (response) {
                 var item = {
                     name: name,
-                    quantity: quantity
+                    quantity: quantity,
                 };
                 items.push(item);
             })
@@ -190,31 +183,62 @@ function ShoppingListService($q, WeightLossFilterService) {
     };
 }
 
-
-MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
+MenuCategoriesService.$inject = ["$http", "ApiBasePath"];
 function MenuCategoriesService($http, ApiBasePath) {
     var service = this;
 
     service.getMenuCategories = function () {
         var response = $http({
             method: "GET",
-            url: (ApiBasePath + "/categories.json")
+            url: ApiBasePath + "/categories.json",
         });
 
         return response;
     };
-
 
     service.getMenuForCategory = function (shortName) {
         var response = $http({
             method: "GET",
-            url: (ApiBasePath + "/menu_items.json"),
+            url: ApiBasePath + "/menu_items.json",
             params: {
-                category: shortName
-            }
+                category: shortName,
+            },
         });
 
         return response;
     };
+}
 
+MenuSearchService.$inject = ["$http", "ApiBasePath"];
+function MenuSearchService($http, ApiBasePath) {
+    var service = this;
+
+    service.getMatchedMenuItems = function (searchTerm) {
+        return $http({
+            method: "GET",
+            url: ApiBasePath + "/menu_items.json",
+        })
+            .then(function (response) {
+                // process result and only keep items that match
+                var foundItems = [];
+                var menuItems = response["data"]["menu_items"];
+                menuItems.forEach((element) => {
+                    if (searchTerm !== "") {
+                        if (element["description"].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
+                            foundItems.push(element["description"]);
+                            console.log("Added");
+                        }
+                    } else {
+                        console.log("EEmpty String ")
+                        return foundItems;
+                    }
+                });
+
+                // return processed items
+                return foundItems;
+            })
+            .catch(function (error) {
+                throw new Error(error.message);
+            });
+    };
 }

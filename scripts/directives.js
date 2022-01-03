@@ -1,5 +1,7 @@
 app2.directive('shoppingList', ShoppingListDirective);
 
+app6.directive('foundItems', FoundItemsDirective);
+
 function ShoppingListDirective() {
     var ddo = {
 
@@ -20,7 +22,6 @@ function ShoppingListDirective() {
 
     return ddo;
 }
-
 
 function ShoppingListDirectiveLink(scope, element, attrs, controller) {
     console.log("Link scope is: ", scope);
@@ -66,15 +67,6 @@ function ShoppingListDirectiveLink(scope, element, attrs, controller) {
 }
 
 
-
-
-
-
-
-
-
-
-
 function ShoppingListDirectiveController() {
     var list = this;
     list.cookiesInList = function () {
@@ -90,5 +82,23 @@ function ShoppingListDirectiveController() {
 
 
 
+function FoundItemsDirective() {
+    var ddo = {
 
+        templateUrl: '/directivesPages/itemsLoader.html',
+        scope: {
+            items: '<',
+            onRemove: '&',
+            flag: '<',
+            message: '<'
+        },
+        controller: FoundItemsDirectiveController,
+        controllerAs: 'item',
+        bindToController: true,
 
+    };
+
+    return ddo;
+}
+
+function FoundItemsDirectiveController() { }
