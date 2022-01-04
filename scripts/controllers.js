@@ -59,6 +59,7 @@ function ShoppingListController(ShoppingListFactory) {
                 list1.emptyItemMsg = false;
                 if (list1.itemName == "cookie") {
                     list1.warning = "cookie detected!";
+                    console.log(list1.warning);
                 }
                 shoppingList.addItem(list1.itemName, list1.Quantity);
                 list1.title = origTitle + " (" + list1.items.length + " items )";

@@ -5,7 +5,7 @@ app2.component("shoppingListComponent", {
         items: "<",
         myTitle: "@title",
         onRemove: "&",
-
+        onAllRemove: '&'
     },
 });
 
@@ -41,12 +41,14 @@ function ShoppingListComponentController($scope, $element) {
             console.log($element);
             if (newValue === true) {
                 // Show warning
-                var warningElem = $element.find("div.error");
-                warningElem.slideDown(900);
+                var warningElem = $element.find("div");
+                console.log(warningElem);
+                warningElem.css('display', 'block');
+
             } else {
                 // Hide warning
-                var warningElem = $element.find("div.error");
-                warningElem.slideUp(900);
+                var warningElem = $element.find("div");
+                warningElem.css('display', 'none');
             }
         });
     };

@@ -1,10 +1,10 @@
-<h3>{{ list.title }} {{list.removedItem}}</h3>
+<h3>{{ $ctrl.title }}</h3>
 <ol>
-  <li ng-repeat="item in list.items">
+  <li ng-repeat="item in $ctrl.items">
     {{ item.quantity }} of {{ item.name }}
-    <button ng-click="list.onRemove({itemIndex:$index});">Remove Item</button>
+    <button ng-click="$ctrl.remove($index);">Remove Item</button>
   </li>
 </ol>
-<button ng-click="list.onAllRemove();">Remove Items</button>
+<button ng-click="$ctrl.onAllRemove();">Remove Items</button>
 <br />
-<div class="error alert alert-danger" ng-transclude></div>
+<div class="error alert alert-danger">cookie detected!</div>
