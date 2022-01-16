@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="/style/navBar.css" />
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+  <a role="button" ui-sref="home" class="navbar-brand"> <img src="/images/logo.png" alt="logo" width="40">
+    Sadiq</a>
+  </button>
+  <div id="navbarCollapse" class="collapse navbar-collapse justify-content-end">
+    <div class="navbar-nav ml-auto">
+      <div ng-if="!$ctrl.auth">
+        <div class="nav-item dropdown login-dropdown">
+          <a role="button" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle"><i class="fas fa-user"></i>
+            Login</a>
+          <div class="dropdown-menu">
+            <div>
+              <form class="form-inline login-form">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-envelope"></i></span>
+                    </span>
+                  </div>
+                  <input class="form-control" type="text" ng-model="$ctrl.email" placeholder="Email" />
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-key"></i></span>
+                  </div>
+                  <input class="form-control" type="password" placeholder="Password" ng-model="$ctrl.password"
+                    required />
+                </div>
+                <button class="btn btn-primary" ng-click="$ctrl.login();">
+                  Login
+                </button>
+                <br>
+                <div ng-if="$ctrl.error" class="login-error text-center alert alert-danger">
+                  {{$ctrl.error}}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="$ctrl.auth">
+        <div class="nav-item">
+          <a role="button" class="nav-item nav-link" ng-click="$ctrl.logOut()"><i class="fas fa-sign-out-alt"></i> Log
+            Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
