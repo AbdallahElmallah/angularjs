@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/style/addUsers.css" />
+
+<div class="container">
+  <div class="row justify-content-md-center no-gutters">
+    <div class="card col-md-6">
+      <div class="card-header">Add New User</div>
+      <div class="card-body">
+        <h5 class="card-title">User Info</h5>
+
+        <form ng-submit="addRelative.addUser();">
+          <div class="form-row align-items-center">
+            <div class="col-md-8">
+              <label for="logo">Add Logo</label>
+              <input type="file" class="form-control-file" id="logo" />
+            </div>
+            <div class="col-md-4">
+              <img src="..." class="rounded-circle form-control-file" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="firstName">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                ng-model="addRelative.firstName"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="familyName">Family Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="familyName"
+                ng-model="addRelative.familyName"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="identificationNumber">Identification Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="identificationNumber"
+                ng-model="addRelative.identificationNumber"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="residencyNumber">Residency Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="residencyNumber"
+                ng-model="addRelative.residencyNumber"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="relativeRelation">Relative Relation</label>
+              <input
+                type="text"
+                class="form-control"
+                id="relativeRelation"
+                ng-model="addRelative.relativeRelation"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="mobile" class="required">Mobile Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobile"
+                ng-model="addRelative.mobile"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="password" class="required">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+                ng-model="addRelative.password"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary">Add User</button>
+              <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <div ng-if="addRelative.success" class="alert alert-success">
+                {{addRelative.success}}
+              </div>
+              <div ng-if="addRelative.failed" class="alert alert-danger">
+                {{addRelative.failed}}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

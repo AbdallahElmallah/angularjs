@@ -1,0 +1,39 @@
+<div
+  class="d-flex flex-column min-vh-100 justify-content-center align-items-center"
+  ng-controller="LoginController as loginCtrl"
+>
+  <div class="login">
+    <h1 class="">Administrator Login</h1>
+    <div>
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          class="form-control"
+          type="text"
+          ng-model="loginCtrl.email"
+          placeholder="Email"
+        />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          class="form-control"
+          type="password"
+          placeholder="Password"
+          ng-model="loginCtrl.password"
+        />
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" ng-click="loginCtrl.login()">
+          Login
+        </button>
+      </div>
+    </div>
+    <div
+      ng-if="loginCtrl.error"
+      class="login-error text-center alert alert-danger"
+    >
+      {{loginCtrl.error}}
+    </div>
+  </div>
+</div>

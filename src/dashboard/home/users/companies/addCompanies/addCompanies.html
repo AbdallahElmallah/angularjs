@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/style/addUsers.css" />
+
+<div class="container">
+  <div class="row justify-content-md-center no-gutters">
+    <div class="card col-md-6">
+      <div class="card-header">Add New Company</div>
+      <div class="card-body">
+        <h5 class="card-title">Company Info</h5>
+
+        <form ng-submit="addCompany.addUser();">
+          <div class="form-row align-items-center">
+            <div class="col-md-8">
+              <label for="logo">Add Logo</label>
+              <input type="file" class="form-control-file" id="logo" />
+            </div>
+            <div class="col-md-4">
+              <img src="..." class="rounded-circle form-control-file" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="companyName">Company Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyName"
+                ng-model="addCompany.companyName"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="companyAddress">Company Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyAddress"
+                ng-model="addCompany.companyAddress"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="commercialRegistrationNo"
+                >Commercial Registration Number</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="commercialRegistrationNo"
+                ng-model="addCompany.commercialRegistrationNo"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="subscriptionContractValue"
+                >Subscription Contract Value</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="subscriptionContractValue"
+                ng-model="addCompany.subscriptionContractValue"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="mobile" class="required">Mobile Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mobile"
+                ng-model="addCompany.mobile"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="password" class="required">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+                ng-model="addCompany.password"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="addAttachment">Add Attachment</label>
+              <input type="file" class="form-control-file" id="addAttachment" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary">Add Company</button>
+              <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <div ng-if="addCompany.success" class="alert alert-success">
+                {{addCompany.success}}
+              </div>
+              <div ng-if="addCompany.failed" class="alert alert-danger">
+                {{addCompany.failed}}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
